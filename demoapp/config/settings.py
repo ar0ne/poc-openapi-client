@@ -29,7 +29,9 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-THIRD_PARTY_APPS = []
+THIRD_PARTY_APPS = [
+    "drf_yasg",
+]
 
 DJANGO_APPS = [
     'django.contrib.admin',
@@ -126,4 +128,4 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 
-ADMIN_SITE_URL = "admin"
+ADMIN_SITE_URL = "admin/"
