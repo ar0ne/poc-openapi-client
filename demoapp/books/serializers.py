@@ -1,7 +1,18 @@
 """Books app serializers"""
 from rest_framework.serializers import ModelSerializer
 
-from books.models import Book
+from books.models import Book, Author
+
+
+class AuthorSerializer(ModelSerializer):
+    """Author model serializer"""
+
+    class Meta:
+        """meta class"""
+        model = Author
+        fields = (
+            "name",
+        )
 
 
 class BookSerializer(ModelSerializer):
@@ -10,6 +21,7 @@ class BookSerializer(ModelSerializer):
     class Meta:
         model = Book
         fields = (
+            # "author",
             "content",
             "created",
             "id",
