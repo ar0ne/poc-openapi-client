@@ -29,6 +29,7 @@ class Book(BaseModel):
     """Book model"""
     title: str = models.CharField(max_length=50)
     content: str = models.TextField()
+    year: int | None = models.SmallIntegerField(null=True, blank=True)
 
     def __str__(self) -> str:
         """To string"""

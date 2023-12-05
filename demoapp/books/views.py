@@ -15,6 +15,7 @@ class AuthorViewSet(viewsets.ModelViewSet):
     permission_classes = ()
     serializer_class = AuthorSerializer
 
+
 class BooksViewSet(viewsets.ModelViewSet):
     """Books view set"""
 
