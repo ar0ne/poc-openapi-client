@@ -111,6 +111,8 @@ USE_I18N = True
 
 USE_TZ = True
 
+DEFAULT_CHARSET = 'UTF-8'
+
 STATIC_ROOT = "staticfiles"
 STATIC_URL = "/static/"
 

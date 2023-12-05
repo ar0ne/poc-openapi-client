@@ -8,9 +8,12 @@ from demo_api_client.api.api import (
     api_v1_books_list as get_all_books,
     api_v1_books_retrieve as get_book_by_id,
     api_v1_books_create as create_book,
+    api_v1_books_encrypt_create as encrypt_book_content,
+    api_v1_books_decrypt_create as decrypt_book_content,
 )
 from demo_api_client.types import Response
-from demo_api_client.models import Book, BookRequest, PaginatedBookList
+from demo_api_client.models import Book, BookRequest, PaginatedBookList, DecryptDataInlineRequest
+
 
 def main():
     client = Client(base_url="http://localhost:8000")
@@ -33,6 +36,14 @@ def main():
 
         books = get_all_books.sync(client=client)
         print(books.count)
+
+        encrypted_book_content = encrypt_book_content.sync(new_book.id, client=client)
+        print(encrypted_book_content.data)
+
+        data = DecryptDataInlineRequest(data=encrypted_book_content.data)
+        decrypted_content = decrypt_book_content.sync(client=client, json_body=data, form_data=data, multipart_data=data)
+
+        print(decrypted_content.result)
 
 
 if __name__ == "__main__":

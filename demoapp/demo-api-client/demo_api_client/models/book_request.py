@@ -1,57 +1,52 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar
+from typing import Any, Dict, List, Type, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
 
-if TYPE_CHECKING:
-    from ..models.author import Author
+from ..types import Unset
 
-
-T = TypeVar("T", bound="Book")
+T = TypeVar("T", bound="BookRequest")
 
 
 @_attrs_define
-class Book:
+class BookRequest:
     """Book model serializer
 
     Attributes:
-        authors (List['Author']):
         content (str):
-        created (datetime.datetime):
-        id (str):
         title (str):
     """
 
-    authors: List["Author"]
     content: str
-    created: datetime.datetime
-    id: str
     title: str
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        authors = []
-        for authors_item_data in self.authors:
-            authors_item = authors_item_data.to_dict()
-
-            authors.append(authors_item)
-
         content = self.content
-        created = self.created.isoformat()
-
-        id = self.id
         title = self.title
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "authors": authors,
                 "content": content,
-                "created": created,
-                "id": id,
+                "title": title,
+            }
+        )
+
+        return field_dict
+
+    def to_multipart(self) -> Dict[str, Any]:
+        content = self.content if isinstance(self.content, Unset) else (None, str(self.content).encode(), "text/plain")
+        title = self.title if isinstance(self.title, Unset) else (None, str(self.title).encode(), "text/plain")
+
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(
+            {key: (None, str(value).encode(), "text/plain") for key, value in self.additional_properties.items()}
+        )
+        field_dict.update(
+            {
+                "content": content,
                 "title": title,
             }
         )
@@ -60,34 +55,18 @@ class Book:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.author import Author
-
         d = src_dict.copy()
-        authors = []
-        _authors = d.pop("authors")
-        for authors_item_data in _authors:
-            authors_item = Author.from_dict(authors_item_data)
-
-            authors.append(authors_item)
-
         content = d.pop("content")
-
-        created = isoparse(d.pop("created"))
-
-        id = d.pop("id")
 
         title = d.pop("title")
 
-        book = cls(
-            authors=authors,
+        book_request = cls(
             content=content,
-            created=created,
-            id=id,
             title=title,
         )
 
-        book.additional_properties = d
-        return book
+        book_request.additional_properties = d
+        return book_request
 
     @property
     def additional_keys(self) -> List[str]:
