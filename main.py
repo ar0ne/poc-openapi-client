@@ -15,8 +15,12 @@ from demo_api_client.types import Response
 from demo_api_client.models import Book, BookRequest, PaginatedBookList, DecryptDataInlineRequest
 
 
+BASE_URL = "http://localhost:8000"
+
+
+# Note: don't forget to build wheel for api client and install in your environment.
 def main():
-    client = Client(base_url="http://localhost:8000")
+    client = Client(base_url=BASE_URL)
 
     books: PaginatedBookList | None
     with client as client:
